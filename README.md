@@ -1,44 +1,50 @@
 # auto-note
 
-Obsidian 自动笔记 Skill：**强制使用官方 Obsidian CLI** 读写 vault，禁止直接改库内 `.md` 文件。
+Obsidian 自动笔记 Skill：**强制官方 Obsidian CLI**；库规则在二级目录 **`规范/`**。
+
+## 库路径
+
+- **禁止**写死 `obsidian-vault` 或其它臆造库名。  
+- 运行时从 `obsidian vaults` / `~/Library/Application Support/obsidian/obsidian.json` 解析**当前打开**的 vault。  
+- 规则文件（相对 vault 根）：
+  - `规范/AI使用笔记指南.md`
+  - `规范/AGENTS.md`
+  - `规范/CLAUDE.md`
 
 ## 安装
 
-### Claude Code / Codex
-
 ```bash
+# Claude Code
 git clone https://github.com/llc370219/auto-note.git ~/.claude/skills/auto-note
-# 或 Codex
+
+# Codex
 git clone https://github.com/llc370219/auto-note.git ~/.codex/skills/auto-note
-```
 
-### Grok
-
-```bash
+# Grok
 git clone https://github.com/llc370219/auto-note.git ~/.grok/skills/auto-note
 ```
 
-### 手动复制
+已安装时更新：
 
-将本仓库 `SKILL.md` 放到对应 skills 目录下的 `auto-note/SKILL.md`。
+```bash
+cd ~/.claude/skills/auto-note && git pull
+# 同步到其它 tools 目录同理
+```
 
 ## 使用
 
-- 斜杠：`/auto-note`
-- 自然语言（会自动匹配 description 触发词），例如：
-  - 「记一下」「写一段记录」「归档到笔记」
-  - 「更新状态」「写到 Obsidian」
-  - `obsidian` / `notes` / `document this`
+- `/auto-note`
+- 自然语言：记一下、写一段记录、归档、更新状态、obsidian、notes…
 
 ## 前置
 
-1. 已安装 Obsidian 桌面端（含官方 CLI，macOS 常见 `/usr/local/bin/obsidian`）
-2. 写库时 **Obsidian 保持运行**
-3. 库根建议有 `AI使用笔记指南.md`（可选但推荐）
+1. Obsidian 桌面端 + 官方 CLI  
+2. 写库时 App 保持运行  
+3. 库内存在 `规范/AI使用笔记指南.md`（推荐）
 
 ## 不要
 
-- 不要 `npm install -g obsidian-cli`（会遮蔽官方命令）
+- `npm install -g obsidian-cli`（会遮蔽官方命令）
 
 ## License
 
