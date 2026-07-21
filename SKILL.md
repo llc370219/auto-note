@@ -29,7 +29,7 @@ allowed-tools: Read, Bash, Grep, Glob
    - **禁止**用 Write/Edit/`cat >`/`python open()` 等直接改 vault 内 `.md` 写笔记  
    - **禁止**安装或调用 npm 包 `obsidian-cli`  
 2. Obsidian **桌面端必须在运行**。  
-3. 遵守 **`规范/AI笔记使用规范.md`** 与 **`规范/AGENTS.md`**（二级目录，不在库根）。  
+3. 遵守 **`AI笔记使用规范/AI使用笔记指南.md`** 与 **`AI笔记使用规范/AGENTS.md`**（一级目录 `AI笔记使用规范/`）。  
 4. 有结论的笔记必须有短 **`## 成果总结`**（≤5 条）。  
 5. **禁止**密钥/密码/Cookie 明文入笔记。  
 6. **禁止写死库路径/库名**（如 `obsidian-vault`、臆造文件夹名）。必须以本机当前打开的 vault 为准（见 §1.1）。
@@ -90,14 +90,14 @@ obsidian version
 ### 1.3 加载库规则（二级目录）
 
 ```bash
-# 规范在二级目录 规范/ ，不在库根
-obsidian read path="规范/AI笔记使用规范.md" 2>/dev/null || true
-obsidian read path="规范/AGENTS.md" 2>/dev/null || true
+# 规则在一级目录 `AI笔记使用规范/`
+obsidian read path="AI笔记使用规范/AI使用笔记指南.md" 2>/dev/null || true
+obsidian read path="AI笔记使用规范/AGENTS.md" 2>/dev/null || true
 ```
 
 `read` 不可用时，可用 Read 工具只读：
 
-`$VAULT/规范/AI笔记使用规范.md`  
+`$VAULT/AI笔记使用规范/AI使用笔记指南.md`  
 （**仅读规则**；写库仍必须 CLI。）
 
 ---
@@ -106,7 +106,7 @@ obsidian read path="规范/AGENTS.md" 2>/dev/null || true
 
 | 意图 | 落点 |
 |------|------|
-| 库级规则 | `规范/`（本 Skill 强制遵守处） |
+| 库级规则 | `AI笔记使用规范/`（本 Skill 强制遵守处） |
 | 临时一记 | `收件箱/` 或既有 `Ai对话记录交接文档/` |
 | 有目标的工作 | `项目/<名>/` |
 | 长期主题 | `领域/` 或兼容旧路径 `我的/...` |
@@ -133,7 +133,7 @@ obsidian create path="…" vault="$VAULT_NAME"
 
 **path 铁律**
 
-- ✅ `path="规范/AI笔记使用规范.md"` / `path="项目/Foo/01 状态.md"`（含 `.md` 的完整相对路径）  
+- ✅ `path="AI笔记使用规范/AI使用笔记指南.md"` / `path="项目/Foo/01 状态.md"`（含 `.md` 的完整相对路径）  
 - ❌ `name=` + 仅目录 `path=` 叠用  
 - ❌ 绝对路径当 path  
 - path 相对 **当前 vault 根**
@@ -228,7 +228,7 @@ obsidian create path="…" vault="$VAULT_NAME"
 
 - [ ] 100% 经 `obsidian` CLI 写入？  
 - [ ] vault 为动态解析结果？  
-- [ ] 规则读自 `规范/`？  
+- [ ] 规则读自 `AI笔记使用规范/`？  
 - [ ] 无密钥明文？  
 - [ ] 有成果总结（需要时）？  
 - [ ] 已校验并告知路径？  
