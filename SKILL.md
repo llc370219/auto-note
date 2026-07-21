@@ -29,7 +29,7 @@ allowed-tools: Read, Bash, Grep, Glob
    - **禁止**用 Write/Edit/`cat >`/`python open()` 等直接改 vault 内 `.md` 写笔记  
    - **禁止**安装或调用 npm 包 `obsidian-cli`  
 2. Obsidian **桌面端必须在运行**。  
-3. 遵守 **`规范/AI使用笔记指南.md`** 与 **`规范/AGENTS.md`**（二级目录，不在库根）。  
+3. 遵守 **`规范/AI笔记使用规范.md`** 与 **`规范/AGENTS.md`**（二级目录，不在库根）。  
 4. 有结论的笔记必须有短 **`## 成果总结`**（≤5 条）。  
 5. **禁止**密钥/密码/Cookie 明文入笔记。  
 6. **禁止写死库路径/库名**（如 `obsidian-vault`、臆造文件夹名）。必须以本机当前打开的 vault 为准（见 §1.1）。
@@ -91,13 +91,13 @@ obsidian version
 
 ```bash
 # 规范在二级目录 规范/ ，不在库根
-obsidian read path="规范/AI使用笔记指南.md" 2>/dev/null || true
+obsidian read path="规范/AI笔记使用规范.md" 2>/dev/null || true
 obsidian read path="规范/AGENTS.md" 2>/dev/null || true
 ```
 
 `read` 不可用时，可用 Read 工具只读：
 
-`$VAULT/规范/AI使用笔记指南.md`  
+`$VAULT/规范/AI笔记使用规范.md`  
 （**仅读规则**；写库仍必须 CLI。）
 
 ---
@@ -133,7 +133,7 @@ obsidian create path="…" vault="$VAULT_NAME"
 
 **path 铁律**
 
-- ✅ `path="规范/AI使用笔记指南.md"` / `path="项目/Foo/01 状态.md"`（含 `.md` 的完整相对路径）  
+- ✅ `path="规范/AI笔记使用规范.md"` / `path="项目/Foo/01 状态.md"`（含 `.md` 的完整相对路径）  
 - ❌ `name=` + 仅目录 `path=` 叠用  
 - ❌ 绝对路径当 path  
 - path 相对 **当前 vault 根**

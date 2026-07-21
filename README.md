@@ -7,7 +7,7 @@ Obsidian 自动笔记 Skill：**强制官方 Obsidian CLI**；库规则在二级
 - **禁止**写死 `obsidian-vault` 或其它臆造库名。  
 - 运行时从 `obsidian vaults` / `~/Library/Application Support/obsidian/obsidian.json` 解析**当前打开**的 vault。  
 - 规则文件（相对 vault 根）：
-  - `规范/AI使用笔记指南.md`
+  - `规范/AI笔记使用规范.md`
   - `规范/AGENTS.md`
   - `规范/CLAUDE.md`
 
@@ -40,7 +40,7 @@ cd ~/.claude/skills/auto-note && git pull
 
 1. Obsidian 桌面端 + 官方 CLI  
 2. 写库时 App 保持运行  
-3. 库内存在 `规范/AI使用笔记指南.md`（推荐）
+3. 库内存在 `规范/AI笔记使用规范.md`（推荐）
 
 ## 不要
 
