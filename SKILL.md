@@ -15,7 +15,7 @@ description: >
   交接, 交接文档, 状态更新, 更新状态, 目前情况, 导读, 知识库, second brain,
   双链, wiki, 知识管理, PKM, 记到库里, 帮我记, 帮我写进笔记, 帮我归档,
   记到 Obsidian, 用 Obsidian 记, auto-note, /auto-note.
-version: 1.1.0
+version: 1.2.0
 user-invocable: true
 allowed-tools: Read, Bash, Grep, Glob
 ---
@@ -29,10 +29,11 @@ allowed-tools: Read, Bash, Grep, Glob
    - **禁止**用 Write/Edit/`cat >`/`python open()` 等直接改 vault 内 `.md` 写笔记  
    - **禁止**安装或调用 npm 包 `obsidian-cli`  
 2. Obsidian **桌面端必须在运行**。  
-3. 遵守 **`AI笔记使用规范/AI使用笔记指南.md`** 与 **`AI笔记使用规范/AGENTS.md`**（一级目录 `AI笔记使用规范/`）。  
-4. 有结论的笔记必须有短 **`## 成果总结`**（≤5 条）。  
-5. **禁止**密钥/密码/Cookie 明文入笔记。  
-6. **禁止写死库路径/库名**（如 `obsidian-vault`、臆造文件夹名）。必须以本机当前打开的 vault 为准（见 §1.1）。
+3. **AI 使用 Obsidian 时强制读取** **`AI笔记使用规范/AI使用笔记指南.md`**（及摘要 `AGENTS.md`），见 §1.3。  
+4. **进入某项目时强制读取** 该项目 AI 指引（见 §1.4），再读 `00 导读` / `01 状态`；未完成读取链禁止写库。  
+5. 有结论的笔记必须有短 **`## 成果总结`**（≤5 条）。  
+6. **禁止**密钥/密码/Cookie 明文入笔记。  
+7. **禁止写死库路径/库名**（如 `obsidian-vault`、臆造文件夹名）。必须以本机当前打开的 vault 为准（见 §1.1）。
 
 CLI 不可用：启动 App → 等待 → 仍失败则停止，**不得**回退为直接改文件。
 
@@ -87,18 +88,34 @@ done
 obsidian version
 ```
 
-### 1.3 加载库规则（二级目录）
+### 1.3 加载库规则（强制 · AI 使用 Obsidian）
 
 ```bash
-# 规则在一级目录 `AI笔记使用规范/`
-obsidian read path="AI笔记使用规范/AI使用笔记指南.md" 2>/dev/null || true
-obsidian read path="AI笔记使用规范/AGENTS.md" 2>/dev/null || true
+# 一级目录 `AI笔记使用规范/` — 使用 Obsidian 时强制读取
+obsidian read path="AI笔记使用规范/AI使用笔记指南.md" vault="$VAULT_NAME"
+obsidian read path="AI笔记使用规范/AGENTS.md" vault="$VAULT_NAME"
 ```
 
-`read` 不可用时，可用 Read 工具只读：
+`read` 不可用时，可用 Read 工具**只读**规则文件：
 
 `$VAULT/AI笔记使用规范/AI使用笔记指南.md`  
 （**仅读规则**；写库仍必须 CLI。）
+
+### 1.4 项目 AI 指引（进入某项目时强制）
+
+任务落在 `项目/<名>/` 或用户点名某项目时，在写库前按序尝试（命中即停）：
+
+```bash
+PROJ="<项目名>"
+obsidian read path="项目/$PROJ/00 AI指引.md" vault="$VAULT_NAME" \
+  || obsidian read path="项目/$PROJ/00 AI接入与项目导读.md" vault="$VAULT_NAME" \
+  || obsidian read path="项目/$PROJ/AGENTS.md" vault="$VAULT_NAME" \
+  || echo "WARN: 缺少项目 AI 指引，建议补建 00 AI指引.md"
+obsidian read path="项目/$PROJ/00 导读.md" vault="$VAULT_NAME" 2>/dev/null || true
+obsidian read path="项目/$PROJ/01 状态.md" vault="$VAULT_NAME" 2>/dev/null || true
+```
+
+然后用三句话复述：目标 · 可写范围 · 下一步，再执行。
 
 ---
 
@@ -106,14 +123,14 @@ obsidian read path="AI笔记使用规范/AGENTS.md" 2>/dev/null || true
 
 | 意图 | 落点 |
 |------|------|
-| 库级规则 | `AI笔记使用规范/`（本 Skill 强制遵守处） |
+| 库级规则 | `AI笔记使用规范/`（本 Skill 强制遵守处；**使用 Obsidian 必读**） |
 | 临时一记 | `收件箱/` 或既有 `Ai对话记录交接文档/` |
 | 有目标的工作 | `项目/<名>/` |
 | 长期主题 | `领域/` 或兼容旧路径 `我的/...` |
 | 可复用知识 | `资源/` |
 | 已结束 | `归档/`（默认只读） |
 
-**项目内最少：** `00 导读.md` · `01 状态.md` · `02 记录/…`
+**项目内最少：** `00 AI指引.md`（有 AI 协作则必须）· `00 导读.md` · `01 状态.md` · `02 记录/…`
 
 ---
 
@@ -228,7 +245,8 @@ obsidian create path="…" vault="$VAULT_NAME"
 
 - [ ] 100% 经 `obsidian` CLI 写入？  
 - [ ] vault 为动态解析结果？  
-- [ ] 规则读自 `AI笔记使用规范/`？  
+- [ ] 已强制读取 `AI笔记使用规范/AI使用笔记指南.md`？  
+- [ ] 若进项目：已读项目 AI 指引 + 导读 + 状态？  
 - [ ] 无密钥明文？  
 - [ ] 有成果总结（需要时）？  
 - [ ] 已校验并告知路径？  
